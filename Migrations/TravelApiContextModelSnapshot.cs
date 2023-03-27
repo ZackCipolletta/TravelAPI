@@ -21,6 +21,7 @@ namespace TravelApi.Migrations
             modelBuilder.Entity("TravelApi.Models.Destination", b =>
                 {
                     b.Property<int>("DestinationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -34,6 +35,7 @@ namespace TravelApi.Migrations
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -55,13 +57,11 @@ namespace TravelApi.Migrations
 
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
-                    b.HasOne("TravelApi.Models.Destination", "Destination")
+                    b.HasOne("TravelApi.Models.Destination", null)
                         .WithMany("Reviews")
                         .HasForeignKey("DestinationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Destination");
                 });
 
             modelBuilder.Entity("TravelApi.Models.Destination", b =>

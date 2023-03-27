@@ -11,13 +11,13 @@ namespace TravelApi.Models
     public TravelApiContext(DbContextOptions<TravelApiContext> options) : base(options)
     {
     }
-      protected override void OnModelCreating(ModelBuilder modelBuilder)
-      {
-          modelBuilder.Entity<Destination>()
-              .HasMany(destination => destination.Reviews)
-              .WithOne(reviews => reviews.Destination)
-              .HasForeignKey(reviews => reviews.DestinationId);
-      }
+    // protected override void OnModelCreating(ModelBuilder modelBuilder)
+    // {
+    //     modelBuilder.Entity<Destination>()
+    //         .HasMany(destination => destination.Reviews)
+    //         .WithOne(review => review.Destination)
+    //         .HasForeignKey(review => review.DestinationId);
+    // }
 
     // }
   }

@@ -10,8 +10,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230327185101_newModelDataAnnotations")]
-    partial class newModelDataAnnotations
+    [Migration("20230327233704_damnit")]
+    partial class damnit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,7 @@ namespace TravelApi.Migrations
             modelBuilder.Entity("TravelApi.Models.Destination", b =>
                 {
                     b.Property<int>("DestinationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -36,6 +37,7 @@ namespace TravelApi.Migrations
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
                     b.Property<int>("ReviewId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<string>("Description")

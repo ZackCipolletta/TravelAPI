@@ -14,15 +14,3 @@ build_property.SupportLocalizedComponentNames =
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = /Users/student/Desktop/TravelAPI.Solution/TravelApi
 build_property._RazorSourceGeneratorDebug = 
-
-[/Users/student/Desktop/TravelAPI.Solution/TravelApi/Shared/Footer.cshtml]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL0Zvb3Rlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/student/Desktop/TravelAPI.Solution/TravelApi/Shared/_Layout.cshtml]
-build_metadata.AdditionalFiles.TargetPath = U2hhcmVkL19MYXlvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/student/Desktop/TravelAPI.Solution/TravelApi/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 

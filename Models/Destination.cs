@@ -5,9 +5,9 @@ namespace TravelApi.Models
 {
   public class Destination
   {
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+
     public int DestinationId { get; set; }
     public string Name { get; set; }
-    public List<Review> Reviews { get; set; }
+    public virtual List<Review> Reviews { get; set; }
   }
 }

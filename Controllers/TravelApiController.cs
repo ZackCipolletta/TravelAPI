@@ -19,19 +19,11 @@ namespace TravelApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Destination>>> Get(string name)
     {
-      IQueryable<Destination> query = _db.Destinations.AsQueryable();
+      List<Destination> query = await _db.Destinations.Include(destination => destination.Reviews).ToListAsync();
 
-      if (name != null)
-      {
-        query = query
-        .Include(destination => destination.Reviews)
-        .Where(entry => entry.Name == name);
-      }
-      query.Include(destination => destination.Reviews);
-      // .Where(entry => entry.Name == name);
-
-      return await query.ToListAsync();
+      return query;
     }
+  
 
     // GET: api/Destinations/5
     [HttpGet("{id}")]
