@@ -53,50 +53,6 @@ namespace TravelApi.Controllers
       return destinations;
     }
   
-
-
-
-  //  model = _db.Animals.OrderBy(animal => animal.DateOfAdmittance).ToList();
-
-
-// // GET api/destinations
-// [HttpGet]
-// public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city)
-// {
-//     IQueryable<Destination> query = _db.Destinations.AsQueryable();
-
-//     if (country != null)
-//     {
-//         query = query.Where(entry => entry.Country == country);
-//     }
-
-//     if (city != null)
-//     {
-//         query = query.Where(entry => entry.City == city);
-//     }
-
-//     var results = await query
-//         .Select(destination => new
-//         {
-//             Destination = destination,
-//             ReviewCount = destination.Reviews != null ? destination.Reviews.Count : 0
-//         })
-//         .ToListAsync();
-
-//     // Map the anonymous type back to the Destination class
-//     var destinations = results.Select(result => result.Destination).ToList();
-
-//     // Set the ReviewCount property for each Destination object
-//     foreach (var result in results)
-//     {
-//         result.Destination.ReviewCount = result.ReviewCount;
-//     }
-
-//     return destinations;
-// }
-
-
-
     // GET: api/Destinations/5
     [HttpGet("{id}")]
     public async Task<ActionResult<Destination>> GetDestination(int id)
