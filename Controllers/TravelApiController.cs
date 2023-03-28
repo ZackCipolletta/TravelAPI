@@ -17,13 +17,85 @@ namespace TravelApi.Controllers
 
     // GET api/destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get(string name)
+    public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city, string search)
     {
-      List<Destination> query = await _db.Destinations.Include(destination => destination.Reviews).ToListAsync();
+      IQueryable<Destination> query =  _db.Destinations.Include(destination => destination.Reviews).AsQueryable();
 
-      return query;
+      if (country != null)
+      {
+        query = query.Where(entry => entry.Country == country);
+      }
+
+      if (city != null)
+      {
+        query = query.Where(entry => entry.City == city);
+      }
+
+      if (search == "random")
+      {
+        Random random = new Random();
+        int randomId = random.Next(1, (1 + query.Count()) );
+        query = query.Where(entry => entry.DestinationId == randomId);
+      }
+
+      var destinations = await query.ToListAsync();
+
+      foreach (var destination in destinations)
+      {
+        destination.ReviewCount = destination.Reviews?.Count() ?? 0;
+      }
+
+      if (search == "popular")
+      {
+        destinations = destinations.OrderByDescending(destinations => destinations.ReviewCount).ToList();
+      }
+      
+      return destinations;
     }
   
+
+
+
+  //  model = _db.Animals.OrderBy(animal => animal.DateOfAdmittance).ToList();
+
+
+// // GET api/destinations
+// [HttpGet]
+// public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city)
+// {
+//     IQueryable<Destination> query = _db.Destinations.AsQueryable();
+
+//     if (country != null)
+//     {
+//         query = query.Where(entry => entry.Country == country);
+//     }
+
+//     if (city != null)
+//     {
+//         query = query.Where(entry => entry.City == city);
+//     }
+
+//     var results = await query
+//         .Select(destination => new
+//         {
+//             Destination = destination,
+//             ReviewCount = destination.Reviews != null ? destination.Reviews.Count : 0
+//         })
+//         .ToListAsync();
+
+//     // Map the anonymous type back to the Destination class
+//     var destinations = results.Select(result => result.Destination).ToList();
+
+//     // Set the ReviewCount property for each Destination object
+//     foreach (var result in results)
+//     {
+//         result.Destination.ReviewCount = result.ReviewCount;
+//     }
+
+//     return destinations;
+// }
+
+
 
     // GET: api/Destinations/5
     [HttpGet("{id}")]

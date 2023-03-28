@@ -10,8 +10,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230327233704_damnit")]
-    partial class damnit
+    [Migration("20230328205028_defaultValueofReviewCountTOZero")]
+    partial class defaultValueofReviewCountTOZero
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,8 +26,15 @@ namespace TravelApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("City")
                         .HasColumnType("longtext");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("ReviewCount")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("int");
 
                     b.HasKey("DestinationId");
 

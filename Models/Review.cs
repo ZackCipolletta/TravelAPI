@@ -7,7 +7,7 @@ namespace TravelApi.Models
   {
 
     public int ReviewId { get; set; }
-    [ForeignKey("DestinationId")]
+    [ForeignKey("Destination")]
     public int DestinationId { get; set; }
     
     [StringLength(120)]
