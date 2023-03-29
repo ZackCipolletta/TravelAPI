@@ -13,6 +13,8 @@ namespace TravelApi.Models
     [StringLength(120)]
     public string Title { get; set; }
     public string Description { get; set; }
+    [Required]
+    public string user_name { get; set; }
   }
 }
 
