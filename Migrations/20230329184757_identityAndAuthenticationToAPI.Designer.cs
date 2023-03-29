@@ -10,8 +10,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230328205028_defaultValueofReviewCountTOZero")]
-    partial class defaultValueofReviewCountTOZero
+    [Migration("20230329184757_identityAndAuthenticationToAPI")]
+    partial class identityAndAuthenticationToAPI
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,6 +56,10 @@ namespace TravelApi.Migrations
                     b.Property<string>("Title")
                         .HasMaxLength(120)
                         .HasColumnType("varchar(120)");
+
+                    b.Property<string>("user_name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("ReviewId");
 

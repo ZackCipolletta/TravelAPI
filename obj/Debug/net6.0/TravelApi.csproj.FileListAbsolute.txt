@@ -810,3 +810,5 @@ C:/Users/ZackC/OneDrive/Desktop/Epicodus-projects/TravelAPI/obj/Debug/net6.0/ref
 /Users/student/Desktop/TravelAPI/obj/Debug/net6.0/TravelApi.pdb
 /Users/student/Desktop/TravelAPI/obj/Debug/net6.0/TravelApi.genruntimeconfig.cache
 /Users/student/Desktop/TravelAPI/obj/Debug/net6.0/ref/TravelApi.dll
+/Users/student/Desktop/TravelAPI/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/student/Desktop/TravelAPI/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll

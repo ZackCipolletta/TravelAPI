@@ -66,6 +66,54 @@ namespace TravelApi.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("TravelApi.Models.UserConstants", b =>
+                {
+                    b.Property<int>("UserConstantsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.HasKey("UserConstantsId");
+
+                    b.ToTable("UserConstants");
+                });
+
+            modelBuilder.Entity("TravelApi.Models.UserLogin", b =>
+                {
+                    b.Property<int>("UserLoginId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserLoginId");
+
+                    b.ToTable("UserLogin");
+                });
+
+            modelBuilder.Entity("TravelApi.Models.UserModel", b =>
+                {
+                    b.Property<int>("UserModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("EmailAddress")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("UserModelId");
+
+                    b.ToTable("UserModel");
+                });
+
             modelBuilder.Entity("TravelApi.Models.Review", b =>
                 {
                     b.HasOne("TravelApi.Models.Destination", null)

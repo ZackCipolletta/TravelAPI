@@ -4,7 +4,7 @@
 
 namespace TravelApi.Migrations
 {
-    public partial class removedVirtualDestinationDestinationPropertyfromReviewToPreventInfiniteLOop : Migration
+    public partial class identityAndAuthenticationToAPI2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

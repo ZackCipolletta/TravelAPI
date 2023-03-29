@@ -10,8 +10,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230328231139_requiredUserNameToReviews")]
-    partial class requiredUserNameToReviews
+    [Migration("20230329185057_identityAndAuthenticationToAPI2")]
+    partial class identityAndAuthenticationToAPI2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
