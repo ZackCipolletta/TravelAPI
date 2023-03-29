@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class DestinationsController : ControllerBase
@@ -159,7 +161,7 @@ public async Task<IActionResult> Put(int id, [FromBody] Review review)
         return BadRequest();
     }
 
-    var existingReview = await _db.Reviews.FindAsync(id);
+    Review existingReview = await _db.Reviews.FindAsync(id);
 
     if (existingReview == null)
     {

@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class ReviewsController : ControllerBase
@@ -55,38 +57,52 @@ namespace TravelApi.Controllers
 
     // PUT: api/Reviews/5
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Review review)
+public async Task<IActionResult> Put(int id, Review review)
+{
+    if (id != review.ReviewId)
     {
-      if (id != review.ReviewId)
-      {
         return BadRequest();
-      }
+    }
 
-      _db.Reviews.Update(review);
+    var existingReview = await _db.Reviews.FindAsync(id);
 
-      try
-      {
+    if (existingReview == null)
+    {
+        return NotFound();
+    }
+
+    if (existingReview.user_name != review.user_name)
+    {
+        return BadRequest("User name does not match.");
+    }
+
+    // Update only the title and description, not the user_name
+    existingReview.Title = review.Title;
+    existingReview.Description = review.Description;
+
+    try
+    {
         await _db.SaveChangesAsync();
-      }
-      catch (DbUpdateConcurrencyException)
-      {
+    }
+    catch (DbUpdateConcurrencyException)
+    {
         if (!ReviewExists(id))
         {
-          return NotFound();
+            return NotFound();
         }
         else
         {
-          throw;
+            throw;
         }
-      }
-
-      return NoContent();
     }
 
-    private bool ReviewExists(int id)
-    {
-      return _db.Reviews.Any(e => e.ReviewId == id);
-    }
+    return NoContent();
+}
+
+private bool ReviewExists(int id)
+{
+    return _db.Reviews.Any(e => e.ReviewId == id);
+}
 
     // DELETE: api/Reviews/5
     [HttpDelete("{id}")]
