@@ -6,7 +6,6 @@ namespace TravelApi.Models
   {
     public DbSet<Destination> Destinations { get; set; }
     public DbSet<Review> Reviews { get; set; }
-    public DbSet<UserConstants> UserConstants { get; set; }
     public DbSet<UserLogin> UserLogin { get; set; }
     public DbSet<UserModel> UserModel { get; set; }
       public object Destination { get; internal set; }

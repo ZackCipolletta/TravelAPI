@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+using Microsoft.Extensions.Configuration;
+
+
 namespace TravelApi.Controllers
 {
   [Route("api/[controller]")]
@@ -15,6 +19,9 @@ namespace TravelApi.Controllers
   {
     private IConfiguration _config;
 
+    private readonly UserManager<UserModel> _userManager;
+    private readonly SignInManager<UserModel> _signInManager;
+
     public LoginController(IConfiguration config)
     {
       _config = config;
@@ -22,9 +29,9 @@ namespace TravelApi.Controllers
 
     [AllowAnonymous]
     [HttpPost]
-    public IActionResult Login([FromBody] UserLogin userLogin)
+    public async Task<IActionResult> Login([FromBody] UserLogin userLogin)
     {
-      var user = Authenticate(userLogin);
+      var user = await Authenticate(userLogin);
 
       if (user != null)
       {
@@ -34,7 +41,6 @@ namespace TravelApi.Controllers
 
       return NotFound("User not found");
     }
-
     private string Generate(UserModel user)
     {
       var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperWeinerMan5000"));
@@ -55,13 +61,19 @@ namespace TravelApi.Controllers
       return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    private UserModel Authenticate(UserLogin userLogin)
+    private async Task<UserModel> Authenticate(UserLogin userLogin)
     {
-      var currentUser = UserConstants.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
-
-      if (currentUser != null)
+      var user = await _userManager.FindByNameAsync(userLogin.UserName);
+      if (user == null)
       {
-        return currentUser;
+        return null;
+      }
+
+      var result = await _signInManager.CheckPasswordSignInAsync(user, userLogin.Password, false);
+
+      if (result.Succeeded)
+      {
+        return user;
       }
 
       return null;
