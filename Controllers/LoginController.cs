@@ -15,10 +15,56 @@ namespace TravelApi.Controllers
   {
     private IConfiguration _config;
 
-    public LoginController(IConfiguration config)
+    private readonly TravelApiContext _context;
+
+    public LoginController(TravelApiContext context, IConfiguration config)
     {
+      _context = context;
       _config = config;
     }
+
+
+    [AllowAnonymous]
+[HttpPost("register")]
+public async Task<IActionResult> Register([FromBody] UserModel user)
+{
+  if (ModelState.IsValid)
+  {
+    // check if user already exists
+    var existingUser = await _context.UserModel.FirstOrDefaultAsync(u => u.UserName == user.UserName || u.EmailAddress == user.EmailAddress);
+    if (existingUser != null)
+    {
+      return BadRequest("User already exists");
+    }
+
+    // create new user
+    var newUser = new UserModel
+    {
+      UserName = user.UserName,
+      EmailAddress = user.EmailAddress,
+      Password = user.Password // for simplicity, we are not encrypting the password in this example
+    };
+
+    _context.UserModel.Add(newUser);
+    await _context.SaveChangesAsync();
+
+    // add new user to UserConstants
+    var userConstants = await _context.UserConstant.FirstOrDefaultAsync();
+    if (userConstants == null)
+    {
+      userConstants = new UserConstant();
+      _context.UserConstant.Add(userConstants);
+      await _context.SaveChangesAsync();
+    }
+    userConstants.Users.Add(newUser);
+    await _context.SaveChangesAsync();
+
+    return Ok();
+  }
+
+  return BadRequest(ModelState);
+}
+
 
     [AllowAnonymous]
     [HttpPost]
@@ -57,11 +103,15 @@ namespace TravelApi.Controllers
 
     private UserModel Authenticate(UserLogin userLogin)
     {
-      var currentUser = UserConstants.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
-
-      if (currentUser != null)
+      var userConstants = _context.UserConstant.FirstOrDefault(); // assuming there is only one UserConstants object in the database
+      if (userConstants != null)
       {
-        return currentUser;
+        var currentUser = userConstants.Users.FirstOrDefault(o => o.UserName.ToLower() == userLogin.UserName.ToLower() && o.Password == userLogin.Password);
+
+        if (currentUser != null)
+        {
+          return currentUser;
+        }
       }
 
       return null;

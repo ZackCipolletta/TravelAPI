@@ -17,9 +17,10 @@ namespace TravelApi.Controllers
       _db = db;
     }
 
+  [AllowAnonymous]
     // GET api/destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city, string search)
+    public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city, string search, int id)
     {
       IQueryable<Destination> query = _db.Destinations.Include(destination => destination.Reviews).AsQueryable();
 
@@ -55,21 +56,21 @@ namespace TravelApi.Controllers
       return destinations;
     }
 
+[AllowAnonymous]
+[HttpGet("{id}")]
+public async Task<ActionResult<Destination>> GetDestination(int id)
+{
+    IQueryable<Destination> query = _db.Destinations.Include(group => group.Reviews).AsQueryable();
+    var destination = await query.FirstOrDefaultAsync(d => d.DestinationId == id);
 
-    // GET: api/Destinations/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Destination>> GetDestination(int id)
+    if (destination == null)
     {
-      Destination destination = await _db.Destinations.FindAsync(id);
-
-      if (destination == null)
-      {
         return NotFound();
-      }
-
-      return destination;
     }
 
+    return destination;
+}
+  
     // POST api/destinations
     [HttpPost]
     public async Task<ActionResult<Destination>> Post(Destination destination)

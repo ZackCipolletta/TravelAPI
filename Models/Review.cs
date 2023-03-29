@@ -17,4 +17,3 @@ namespace TravelApi.Models
     public string user_name { get; set; }
   }
 }
-

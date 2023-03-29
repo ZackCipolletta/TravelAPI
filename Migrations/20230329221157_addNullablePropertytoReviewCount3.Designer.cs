@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TravelApi.Models;
 
@@ -10,9 +11,10 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    partial class TravelApiContextModelSnapshot : ModelSnapshot
+    [Migration("20230329221157_addNullablePropertytoReviewCount3")]
+    partial class addNullablePropertytoReviewCount3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,15 +69,15 @@ namespace TravelApi.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("TravelApi.Models.UserConstant", b =>
+            modelBuilder.Entity("TravelApi.Models.UserConstants", b =>
                 {
-                    b.Property<int>("UserConstantId")
+                    b.Property<int>("UserConstantsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.HasKey("UserConstantId");
+                    b.HasKey("UserConstantsId");
 
-                    b.ToTable("UserConstant");
+                    b.ToTable("UserConstants");
                 });
 
             modelBuilder.Entity("TravelApi.Models.UserLogin", b =>
@@ -118,8 +120,6 @@ namespace TravelApi.Migrations
 
                     b.HasKey("UserModelId");
 
-                    b.HasIndex("UserConstantId");
-
                     b.ToTable("UserModel");
                 });
 
@@ -132,23 +132,9 @@ namespace TravelApi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TravelApi.Models.UserModel", b =>
-                {
-                    b.HasOne("TravelApi.Models.UserConstant", null)
-                        .WithMany("Users")
-                        .HasForeignKey("UserConstantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("TravelApi.Models.Destination", b =>
                 {
                     b.Navigation("Reviews");
-                });
-
-            modelBuilder.Entity("TravelApi.Models.UserConstant", b =>
-                {
-                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }
