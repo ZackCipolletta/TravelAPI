@@ -7,21 +7,12 @@ namespace TravelApi.Models
     public DbSet<Destination> Destinations { get; set; }
     public DbSet<Review> Reviews { get; set; }
     public DbSet<UserLogin> UserLogin { get; set; }
-    public DbSet<UserModel> UserModel { get; set; }
-      public object Destination { get; internal set; }
+    public DbSet<ApplicationUser> ApplicationUser { get; set; }
+    public object Destination { get; internal set; }
 
     public TravelApiContext(DbContextOptions<TravelApiContext> options) : base(options)
     {
     }
-    // protected override void OnModelCreating(ModelBuilder modelBuilder)
-    // {
-    //     modelBuilder.Entity<Destination>()
-    //         .HasMany(destination => destination.Reviews)
-    //         .WithOne(review => review.Destination)
-    //         .HasForeignKey(review => review.DestinationId);
-    // }
-
-    // }
   }
 }
 
