@@ -17,6 +17,7 @@ namespace TravelApi.Controllers
       _db = db;
     }
 
+
     // GET api/reviews
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Review>>> Get(string title)
