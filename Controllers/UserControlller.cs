@@ -17,7 +17,7 @@ namespace TravelApi.Controllers
       var currentUser = GetCurrentUser();
 
       return Ok($"Hi {currentUser.UserName}!");
-    }
+    } // attempting to remove obj, bin and appsettings from github
 
 
     [HttpGet("Public")]

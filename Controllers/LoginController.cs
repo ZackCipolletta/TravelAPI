@@ -39,7 +39,7 @@ namespace TravelApi.Controllers
       }
 
       return NotFound("User not found");
-    }
+    } // testing if this works or not
 
     private string Generate(ApplicationUser user)
     {
