@@ -27,45 +27,29 @@ namespace TravelApi.Controllers
     public async Task<IActionResult> Register([FromBody] ApplicationUser userModel)
     {
       var userExists = await _userManager.FindByNameAsync(userModel.UserName);
+
+      var result = await _userManager.CreateAsync(userModel, userModel.PasswordHash);
+
       if (userExists != null)
       {
         return Conflict("User already exists!");
       }
 
-      var result = await _userManager.CreateAsync(userModel, userModel.PasswordHash);
-
-      if (result.Succeeded)
+      else if (result.Succeeded)
       {
         var user = await _userManager.FindByNameAsync(userModel.UserName);
-        var token = Generate(user);
-
-        return Ok(new { token });
-      }
-      else
-      {
-        var errors = string.Join(",", result.Errors.Select(e => e.Description));
-        return StatusCode(StatusCodes.Status500InternalServerError, $"User creation failed! {errors}");
-      }
-    }
-
-    private string Generate(ApplicationUser user)
-    {
-      var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JwtSecretKey"]));
-      var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-      var claims = new[]
-      {
+        var claims = new[]
+        {
                 new Claim(ClaimTypes.NameIdentifier, user.UserName),
                 new Claim(ClaimTypes.Email, user.Email),
             };
 
-      var token = new JwtSecurityToken(_config["JwtIssuer"],
-          _config["JwtAudience"],
-          claims,
-          expires: DateTime.Now.AddMinutes(15),
-          signingCredentials: credentials);
-
-      return new JwtSecurityTokenHandler().WriteToken(token);
+        return Created("", new { message = "User created successfully" });
+      }
+      else
+      {
+        return Created("", new { message = "There was an error creating user" });
+      }
     }
   }
 }

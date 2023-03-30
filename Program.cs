@@ -29,7 +29,7 @@ builder.Services.AddDbContext<TravelApiContext>(
     dbContextOptions => dbContextOptions.UseMySql(
         builder.Configuration["ConnectionStrings:DefaultConnection"],
         ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"])
-    ) // attempting to remove bin, obj and appsettings from github
+    ) 
 );
 
 

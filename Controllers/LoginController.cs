@@ -34,31 +34,10 @@ namespace TravelApi.Controllers
 
       if (user != null)
       {
-        var token = Generate(user);
-        return Ok(token);
+        return Ok("Successfully logged in.");
       }
 
       return NotFound("User not found");
-    } // testing if this works or not
-
-    private string Generate(ApplicationUser user)
-    {
-      var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("SuperWeinerMan5000"));
-      var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-
-      var claims = new[]
-      {
-                new Claim(ClaimTypes.NameIdentifier, user.UserName),
-                new Claim(ClaimTypes.Email, user.Email),
-            };
-
-      var token = new JwtSecurityToken(_config["https://www.yogihosting.com"],
-        _config["https://www.yogihosting.com"],
-        claims,
-        expires: DateTime.Now.AddMinutes(15),
-        signingCredentials: credentials);
-
-      return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
     private async Task<ApplicationUser> Authenticate(UserLogin userLogin)
@@ -77,6 +56,14 @@ namespace TravelApi.Controllers
       }
 
       return null;
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+      await _signInManager.SignOutAsync();
+      return Ok("Successfully logged out.");
     }
   }
 }
