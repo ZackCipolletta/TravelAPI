@@ -5,7 +5,7 @@ using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
-  // [Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class DestinationsController : ControllerBase

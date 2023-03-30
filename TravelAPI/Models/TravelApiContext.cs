@@ -1,17 +1,22 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using TravelApi.Models;
 
 namespace TravelApi.Models
 {
-  public class TravelApiContext : DbContext
+  public class TravelApiContext : IdentityDbContext<ApplicationUser>
   {
     public DbSet<Destination> Destinations { get; set; }
     public DbSet<Review> Reviews { get; set; }
-    public DbSet<UserLogin> UserLogin { get; set; }
-    public DbSet<ApplicationUser> ApplicationUser { get; set; }
-    public object Destination { get; internal set; }
 
     public TravelApiContext(DbContextOptions<TravelApiContext> options) : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      base.OnModelCreating(modelBuilder);
+      // Configure your model here
     }
   }
 }

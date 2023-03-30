@@ -11,8 +11,8 @@ using TravelApi.Models;
 namespace TravelApi.Migrations
 {
     [DbContext(typeof(TravelApiContext))]
-    [Migration("20230330044422_updateDestinationReviewCountNullable")]
-    partial class updateDestinationReviewCountNullable
+    [Migration("20230330175511_fullEFCoreIdentityModels")]
+    partial class fullEFCoreIdentityModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,26 @@ namespace TravelApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "6.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserClaims");
+                });
 
             modelBuilder.Entity("TravelApi.Models.ApplicationUser", b =>
                 {
@@ -119,23 +139,6 @@ namespace TravelApi.Migrations
                     b.HasIndex("DestinationId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("TravelApi.Models.UserLogin", b =>
-                {
-                    b.Property<int>("UserLoginId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("UserLoginId");
-
-                    b.ToTable("UserLogin");
                 });
 
             modelBuilder.Entity("TravelApi.Models.Review", b =>
