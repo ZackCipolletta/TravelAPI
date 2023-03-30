@@ -10517,19 +10517,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ZackC\\.nuget\\packages\\": {}
+    "/Users/student/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ZackC\\OneDrive\\Desktop\\Epicodus-projects\\TravelAPI\\TravelApi.csproj",
+      "projectUniqueName": "/Users/student/Desktop/TravelAPI/TravelApi.csproj",
       "projectName": "TravelApi",
-      "projectPath": "C:\\Users\\ZackC\\OneDrive\\Desktop\\Epicodus-projects\\TravelAPI\\TravelApi.csproj",
-      "packagesPath": "C:\\Users\\ZackC\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ZackC\\OneDrive\\Desktop\\Epicodus-projects\\TravelAPI\\obj\\",
+      "projectPath": "/Users/student/Desktop/TravelAPI/TravelApi.csproj",
+      "packagesPath": "/Users/student/.nuget/packages/",
+      "outputPath": "/Users/student/Desktop/TravelAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ZackC\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/student/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -10603,24 +10603,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[6.0.14, 6.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[6.0.14, 6.0.14]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[6.0.14, 6.0.14]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[6.0.14, 6.0.14]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -10629,7 +10611,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.403/RuntimeIdentifierGraph.json"
       }
     }
   }
