@@ -5,7 +5,7 @@ using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
-  [Authorize]
+  // [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class DestinationsController : ControllerBase
@@ -60,7 +60,7 @@ namespace TravelApi.Controllers
     [HttpGet("{id}")]
     public async Task<ActionResult<Destination>> GetDestination(int id)
     {
-      Destination destination = await _db.Destinations.FindAsync(id);
+      Destination destination = await _db.Destinations.Include(d => d.Reviews).FirstOrDefaultAsync(d => d.DestinationId == id);
 
       if (destination == null)
       {
@@ -115,118 +115,6 @@ namespace TravelApi.Controllers
       return _db.Destinations.Any(e => e.DestinationId == id);
     }
 
-    // _______________________________________________________________________________
-    // PUT: api/Reviews/5
-    // [HttpPut("reviews/{id}")]
-    // public async Task<IActionResult> Put(int id, [FromBody] Review review)
-    // {
-    //   if (id != review.ReviewId)
-    //   {
-    //     return BadRequest();
-    //   }
-
-    //   _db.Reviews.Update(review);
-
-    //   try
-    //   {
-    //     await _db.SaveChangesAsync();
-    //   }
-    //   catch (DbUpdateConcurrencyException)
-    //   {
-    //     if (!ReviewExists(id))
-    //     {
-    //       return NotFound();
-    //     }
-    //     else
-    //     {
-    //       throw;
-    //     }
-    //   }
-
-    //   return NoContent();
-    // }
-
-    // private bool ReviewExists(int id)
-    // {
-    //   return _db.Reviews.Any(e => e.ReviewId == id);
-    // }
-
-
-
-[HttpPut("reviews/{id}")]
-public async Task<IActionResult> Put(int id, [FromBody] Review review)
-{
-    if (id != review.ReviewId)
-    {
-        return BadRequest();
-    }
-
-    Review existingReview = await _db.Reviews.FindAsync(id);
-
-    if (existingReview == null)
-    {
-        return NotFound();
-    }
-
-    if (existingReview.user_name != review.user_name)
-    {
-        return BadRequest("User name does not match.");
-    }
-
-    // Update non-user name fields
-    existingReview.Title = review.Title;
-    existingReview.Description = review.Description;
-
-    try
-    {
-        await _db.SaveChangesAsync();
-    }
-    catch (DbUpdateConcurrencyException)
-    {
-        if (!ReviewExists(id))
-        {
-            return NotFound();
-        }
-        else
-        {
-            throw;
-        }
-    }
-
-    return NoContent();
-}
-
-private bool ReviewExists(int id)
-{
-    return _db.Reviews.Any(e => e.ReviewId == id);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // _________________________________________________________________
     // DELETE: api/Destinations/5
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteDestination(int id)
