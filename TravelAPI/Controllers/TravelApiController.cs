@@ -5,7 +5,7 @@ using TravelApi.Models;
 
 namespace TravelApi.Controllers
 {
-  // [Authorize]
+  [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class DestinationsController : ControllerBase
@@ -81,7 +81,7 @@ namespace TravelApi.Controllers
 
 
     // PUT: api/Destinations/5
-    [HttpPut("destinations/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, Destination destination)
     {
       if (id != destination.DestinationId)
