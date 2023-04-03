@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using TravelApi.Models;
+using TravelApi.Wrappers;
+using TravelApi.Filter;
 
 namespace TravelApi.Controllers
 {
-  [Authorize]
+  // [Authorize]
   [Route("api/[controller]")]
   [ApiController]
   public class DestinationsController : ControllerBase
@@ -19,7 +21,7 @@ namespace TravelApi.Controllers
 
     // GET api/destinations
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Destination>>> Get(string country, string city, string search)
+    public async Task<ActionResult<IEnumerable<Destination>>> Get([FromQuery]PaginationFilter filter, string country, string city, string search)
     {
       IQueryable<Destination> query = _db.Destinations.Include(destination => destination.Reviews).AsQueryable();
 
@@ -51,8 +53,13 @@ namespace TravelApi.Controllers
       {
         destinations = destinations.OrderByDescending(destinations => destinations.ReviewCount).ToList();
       }
+      var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
 
-      return destinations;
+      var pagedData = await _db.Destinations.Skip((validFilter.PageNumber -1)* validFilter.PageSize).Take(validFilter.PageSize).ToListAsync();
+
+      var totalRecords = await _db.Destinations.CountAsync();
+
+      return Ok(new PagedResponse<List<Destination>>(pagedData,validFilter.PageNumber,validFilter.PageSize));
     }
 
 
@@ -67,7 +74,7 @@ namespace TravelApi.Controllers
         return NotFound();
       }
 
-      return destination;
+      return Ok(new Response <Destination>(destination));
     }
 
     // POST api/destinations
